@@ -33,11 +33,11 @@ boost::python::str Match::py_group_name(boost::python::str pyGroupName)
 
 boost::python::str Match::getGroup(boost::python::object groupIdentifier)
 {
-    if (PyInt_Check(groupIdentifier.ptr()))
+    if (PyLong_Check(groupIdentifier.ptr()))
 	{
         return py_group_number(boost::python::extract<int>(groupIdentifier));
 	}
-	else if (PyString_Check(groupIdentifier.ptr()))
+	else if (PyUnicode_Check(groupIdentifier.ptr()))
 	{
         return py_group_name(boost::python::extract<boost::python::str>(groupIdentifier));
 	} 
@@ -129,7 +129,7 @@ boost::python::tuple Match::py_groups()
 {
 	size_t size = groupCount();
     PyObject* groupsTuple = PyTuple_New(size - 1);
-    for(int index = 1; index != size; ++index)
+    for(size_t index = 1; index != size; ++index)
 	{
         boost::python::str groupContent = py_group_number(index);
         // PyTuple_SetItem steals a reference, but because it's a boost::python::object, it'll be Py_DECREF'd by the next iteration
@@ -171,7 +171,7 @@ boost::python::object Match::py_group_variable(boost::python::tuple args, boost:
 
     // If more than one argument is specified, then we return a tuple with group contents in order of the arguments specified
     PyObject* groupsTuple = PyTuple_New(size);
-    for(int index = 0; index != size; ++index)
+    for(size_t index = 0; index != size; ++index)
 	{
         boost::python::str groupContent;
         if (PyNumber_Check(boost::python::object(args[index]).ptr()))
