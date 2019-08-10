@@ -9,7 +9,7 @@
 #include "PythonScript/NppPythonScript.h"
 #include "scintilla.h"
 #include "GILManager.h"
-
+#include <boost/python/str.hpp>
 // Sad, but we need to know if we're in an event handler when running an external command
 // Not sure how I can extrapolate this info and not tie PythonConsole and NotepadPlusWrapper together.
 #include "NotepadPlusWrapper.h"
@@ -301,9 +301,16 @@ void PythonConsole::consume(std::shared_ptr<std::string> statement)
 		try
 		{
 			boost::python::object oldStdout = m_sys.attr("stdout");
-			m_sys.attr("stdout") = boost::python::ptr(this);
-			PyObject* unicodeCommand = PyUnicode_FromEncodedObject(boost::python::str(statement->c_str()).ptr(), "utf-8", NULL);
-			boost::python::object result = m_pushFunc(boost::python::handle<PyObject>(unicodeCommand));
+			m_sys.attr("stdout") = boost::python::ptr(this); 
+			
+			PyObject* test_unicodeCommand = PyUnicode_FromString(statement->c_str());
+
+			boost::python::str test2_pystr("test");
+			PyObject* test2_unicodeCommand = PyUnicode_FromEncodedObject(test2_pystr.ptr(), NULL, NULL);
+
+			boost::python::str pystr(statement->c_str());
+			PyObject* unicodeCommand = PyUnicode_FromEncodedObject(pystr.ptr(), "utf-8", NULL);
+			boost::python::object result = m_pushFunc(boost::python::handle<PyObject>(test_unicodeCommand));
 			//Py_DECREF(unicodeCommand);
 			m_sys.attr("stdout") = oldStdout;
 

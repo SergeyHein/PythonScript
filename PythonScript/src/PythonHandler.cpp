@@ -330,43 +330,14 @@ void PythonHandler::runScriptWorker(const std::shared_ptr<RunScriptArgs>& args)
 		// from the Python API developers.
 		// We also assume the second parameter, "r" won't be modified by the function call.
 		//lint -e{1776}  Converting a string literal to char * is not const safe (arg. no. 2)
-		PyObject* pyio = PyImport_ImportModule("io");
+		FILE* pyFile = _Py_wfopen(args->m_filename.c_str(), _T("r"));
 
-		if (pyio)
+
+
+
+		if (pyFile)
 		{
-			PyObject* pyname = PyUnicode_FromString("open");
-			if (pyname)
-			{
-				PyObject* pyioopen = PyObject_GetAttr(pyio, pyname);
-				if (pyioopen)
-				{
-					PyObject* pyfname = PyUnicode_FromString(filenameUFT8.get());
-					PyObject* pyFile = PyObject_Call(pyioopen, pyfname, (PyObject *)0);
-					
-						if (pyFile)
-						{
-							FILE* cfile = fopen(filenameUFT8.get(), "r");
-							int pyret= PyRun_SimpleFile(cfile, filenameUFT8.get());
-							if (pyret == -1)
-							{
-								if (ConfigFile::getInstance()->getSetting(_T("ADDEXTRALINETOOUTPUT")) == _T("1"))
-								{
-									mp_console->writeText(boost::python::str("\n"));
-								}
-
-								if (ConfigFile::getInstance()->getSetting(_T("OPENCONSOLEONERROR")) == _T("1"))
-								{
-									mp_console->pythonShowDialog();
-								}
-							}
-
-							Py_DECREF(pyFile);
-						}
-					Py_DECREF(pyioopen);
-				}
-					Py_DECREF(pyname);
-			}
-				Py_DECREF(pyio);
+			PyRun_SimpleFileEx(pyFile, WcharMbcsConverter::tchar2char(args->m_filename.c_str()).get(), 1);
 		}
 	}
 

@@ -2,11 +2,12 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros">
-    <BoostBase></BoostBase>
+    <BoostBase>D:\LIBS\boost\boost-1_68_0_vs2015_wp37</BoostBase>
+    <BoostLibPath>$(BoostBase)\lib</BoostLibPath>
     <BoostPythonLibPath></BoostPythonLibPath>
-    <PythonBase>l:\code\cpython</PythonBase>
+    <PythonBase>C:\Sergey\portable\app\WinPython-32bit-3.7.1.0\python-3.7.1</PythonBase>
     <PythonBaseX64>l:\code\x64\cpython</PythonBaseX64>
-    <PythonLibPath>$(PythonBase)\PCbuild</PythonLibPath>
+    <PythonLibPath>$(PythonBase)\libs</PythonLibPath>
     <PythonLibPathX64>$(PythonBaseX64)\PCbuild</PythonLibPathX64>
     <HtmlHelpBase>C:\Program Files (x86)\HTML Help Workshop</HtmlHelpBase>
   </PropertyGroup>

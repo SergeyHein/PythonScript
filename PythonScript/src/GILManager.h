@@ -40,7 +40,9 @@ namespace NppPythonScript
 		{
 
             PyThreadState* thisThreadState = PyGILState_GetThisThreadState();
-            return (thisThreadState && thisThreadState == PyThreadState_GET());
+			// [SERGEYHEIN]: PyThreadState_GET crashes
+            // (thisThreadState && thisThreadState == PyThreadState_GET());
+			return false;
 		}
 
 	};
