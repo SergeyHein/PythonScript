@@ -5,9 +5,11 @@
     <BoostBase></BoostBase>
     <BoostPythonLibPath></BoostPythonLibPath>
     <PythonBase>l:\code\cpython</PythonBase>
-    <PythonBaseX64>l:\code\x64\cpython</PythonBaseX64>
+    <PythonBaseX64>$(PORTABLE_WS_APP_HOME)\Winpython64-3.8.7.0dot\python-3.8.7.amd64</PythonBaseX64>
+    <PythonIncludePath>$(PythonBase)\include</PythonIncludePath>
+    <PythonIncludePathX64>$(PythonBaseX64)\include</PythonIncludePathX64>
     <PythonLibPath>$(PythonBase)\PCbuild</PythonLibPath>
-    <PythonLibPathX64>$(PythonBaseX64)\PCbuild</PythonLibPathX64>
+    <PythonLibPathX64>$(PythonBaseX64)\libs</PythonLibPathX64>
     <HtmlHelpBase>C:\Program Files (x86)\HTML Help Workshop</HtmlHelpBase>
   </PropertyGroup>
   <PropertyGroup />
@@ -18,6 +20,12 @@
     </BuildMacro>
     <BuildMacro Include="PythonBase">
       <Value>$(PythonBase)</Value>
+    </BuildMacro>
+    <BuildMacro Include="PythonIncludePath">
+      <Value>$(PythonIncludePath)</Value>
+    </BuildMacro>
+    <BuildMacro Include="PythonIncludePathX64">
+      <Value>$(PythonIncludePathX64)</Value>
     </BuildMacro>
     <BuildMacro Include="PythonLibPath">
       <Value>$(PythonLibPath)</Value>
